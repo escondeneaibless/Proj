@@ -25,6 +25,7 @@ const FormSlider = () => {
       console.log(res.data);
     } catch (err) {
       setError(err.message);
+      
     }
   };
   // const handleChange = (e) => {

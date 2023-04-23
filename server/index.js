@@ -116,47 +116,50 @@ const mv = require("mv");
 //   console.log(req.file); // Загруженный файл
 //   res.send('File uploaded successfully');
 // });
+
+
 const server = http.createServer((req, res) => {
-  if (req.url === '/form_edit' && req.method.toLowerCase() === 'post') {
+  if (req.url === "/form_edit" && req.method.toLowerCase() === "post") {
     const form = formidable({ multiples: false });
 
     form.parse(req, (err, fields, files) => {
       if (err) {
         console.error(err);
-        res.writeHead(500, { 'Content-Type': 'application/json' });
-        res.end(JSON.stringify({ error: 'Internal server error' }));
-        return;
-      } 
-      const { photo } = files;
-      if (!photo || typeof photo.mv !== 'function') {
-        console.error(files['']["filepath"]);
-        
+        res.writeHead(500, { "Content-Type": "application/json" });
+        res.end(JSON.stringify({ error: "Internal server error" }));
         return;
       }
-      
-      files['']['filepath'].mv(`${__dirname}/server/fileForUsers/${newFileName}`, (err) => {
-        const newFileName = req.file.filename;
-    
-        console.log('file was uploaded');
-    
-        res.json({
-          filename: req.file.originalname,
-          filePath: `/fileForUsers/${newFileName}`,
-        });
-      });
-      
 
-      res.writeHead(200, { 'Content-Type': 'application/json' });
-      res.end(JSON.stringify( files ));
+      const { image } = files;
+      
+      const newFileName = image.originalFilename;
+      
+      mv( 
+        image.filepath,
+        (`${__dirname}/fileForUsers/${newFileName}`),
+        (err) => {
+                
+
+          console.log("file was uploaded");
+
+          res.json({
+            filename: image.originalname,
+            filePath: `/fileForUsers/${newFileName}`,
+          });
+        }
+      );
+
+      res.writeHead(200, { "Content-Type": "application/json" });
+      res.end(JSON.stringify(files));
     });
   } else {
-    res.writeHead(404, { 'Content-Type': 'application/json' });
-    res.end(JSON.stringify({ error: 'Endpoint not found' }));
+    res.writeHead(404, { "Content-Type": "application/json" });
+    res.end(JSON.stringify({ error: "Endpoint not found" }));
   }
 });
 
 const port = 5000;
- 
+
 server.listen(port, () => {
   console.log(`Server running on port ${port}`);
 });
