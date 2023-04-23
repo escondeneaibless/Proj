@@ -1,0 +1,153 @@
+.modal {
+    height: 100%;
+    width: 100%;
+    background: rgba(0, 0, 0, 0.4);
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+  }
+  .modal.open {
+    height: 100%;
+    display: block;
+  }
+  .modal.close {
+    height: 0;
+    display: none;
+  }
+  .modal__content {
+    padding: 20px;
+    border-radius: 12px;
+    background-color: white;
+    height: 400px;
+    width: 350px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    border: 5px solid black;
+  }
+  .modal_form h1 {
+    position: relative;
+    bottom: 20px;
+    font-size: 45px;
+  }
+  .modal_form input {
+    display: block;
+    margin-bottom: 30px;
+    width: 85%;
+    height: 35px;
+    transition: all 0.2s;
+    border-radius: 5px;
+    border: 1px solid black;
+    padding: 0 13px;
+    position: relative;
+  }
+  .modal_form input:focus {
+    outline: none;
+    border-radius: 15px;
+  }
+  .modal_btn {
+    width: 100%;
+    display: grid;
+    place-content: center;
+  }
+  .modal_form button {
+    display: block;
+    width: 180px;
+    height: 40px;
+    border-radius: 15px;
+    font-size: 16px;
+    background-color: #4ee4ff;
+    transition: ease-out 0.8s;
+    box-shadow: inset 0 0 0 0 #725ac1;
+    letter-spacing: 1px;
+    font-weight: 600;
+  }
+  .modal_form button:last-child:hover {
+    box-shadow: inset 0 100px 0 0 #725ac1;
+    color: white;
+  }
+  .modal_form button:first-child:hover {
+    box-shadow: inset 0 -100px 0 0 #725ac1;
+    color: white;
+  }
+  .line {
+    position: relative;
+    right: 25%;
+    width: 150%;
+    height: 1px;
+    background: #000;
+    margin: 40px 0;
+  }
+  .line::before {
+    content: "Or";
+    position: absolute;
+    top: -10px;
+    right: 41.5%;
+    width: 40px;
+    background-color: #fff;
+  }
+  .pass,
+  .login {
+    font-size: 14px;
+  }
+  .modal_log_lab,
+  .modal_pass_lab {
+    position: absolute;
+    font-size: 18px;
+    pointer-events: none;
+    transition: all 0.3s ease;
+  }
+  .modal_log_lab {
+    top: 38.6%;
+    transform: translateX(-175%);
+    position: absolute;
+    transition: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+    pointer-events: none;
+    opacity: 1;
+  }
+  .modal_pass_lab {
+    top: 45.4%;
+    transform: translateX(-100%);
+  
+    transition: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .login:focus ~ .modal_log_lab {
+    transform: translateX(-70px) translateY(-19px) scale(0.9);
+    background: #fff;
+  }
+  
+  .pass:focus ~ .modal_pass_lab {
+    transform: translateX(-70px) translateY(-19px) scale(0.9);
+    background: #fff;
+  }
+  
+  .login_off {
+    top: 38.5%;
+    transform: translateX(-70px) translateY(-19px) scale(0.9);
+    background: #fff;
+    position: absolute;
+    transition: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+    pointer-events: none;
+  }
+  .password_off {
+    top: 45.4%;
+    transform: translateX(-70px) translateY(-19px) scale(0.9);
+    position: absolute;
+    transition: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+    pointer-events: none;
+    background-color: #fff;
+  }
+  .header_end {
+    padding: 0 20%;
+    font-size: 44px;
+    height: 70px;
+    display: flex;
+    align-items: center;
+    color: rgb(37, 37, 37);
+  }
+  

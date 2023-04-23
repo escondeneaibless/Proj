@@ -1,0 +1,14 @@
+.message {
+    background: #fff;
+    margin: 7px;
+    border-radius: 20px;
+    height: auto;
+
+    display: flex;
+    flex-wrap: wrap;
+}
+.text {
+    padding: 0 20px;
+    max-width: 270px;
+    overflow-wrap: break-word;
+}

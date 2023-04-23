@@ -1,0 +1,137 @@
+.footer {
+  width: 100%;
+  height: 300px;
+  background: #000;
+}
+.footer p {
+  color: rgb(107, 107, 107);
+  display: flex;
+  justify-content: center;
+}
+.footer_line {
+  padding: 0;
+  display: flex;
+  align-items: center;
+  padding-top: 20px;
+}
+.footer_list {
+  width: 20%;
+  display: flex;
+  list-style: none;
+  justify-content: center;
+  flex-direction: column;
+  align-items: end;
+  color: white;
+  gap: 30px;
+  border-left: 2px solid white;
+  margin: 0 10% 0 20px;
+}
+.footer_list li {
+  cursor: pointer;
+  position: relative;
+  font-size: 17px;
+  transition: all 0.4s ease-in-out;
+}
+.footer_list li:hover {
+  text-shadow: 0 0 7px white;
+}
+.footer_list li::before {
+  content: "";
+  width: 2px;
+  height: 2px;
+  background: #fff;
+  position: absolute;
+  bottom: -4px;
+  right: 0;
+  transition: all 0.4s ease-in-out;
+  opacity: 0;
+  border-radius: 20px;
+}
+.footer_list li:hover::before {
+  opacity: 1;
+  width: 100%;
+}
+.header_block {
+  display: flex;
+  align-items: center;
+  justify-content: end;
+}
+.header_contact {
+  display: flex;
+  justify-content: flex-end;
+  flex-direction: column;
+  align-items: end;
+  gap: 10px;
+  width: 100%;
+  margin-right: 6%;
+}
+.contact_items {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 2px solid black;
+  background-color: #fff;
+  border-radius: 40px;
+  transition: all 0.6s;
+  margin: 0 2.5px;
+}
+.contact_item_vk {
+  background: url(../../images/vk-social-logotype-svgrepo-com.svg) no-repeat;
+}
+.contact_item_wsp {
+  background: url(../../images/whatsapp-svgrepo-com.svg) no-repeat;
+}
+.contact_item_phone {
+  background: url(../../images/phone-svgrepo-com.svg) no-repeat;
+}
+.contact_item_vk,
+.contact_item_wsp,
+.contact_item_phone {
+  background-size: contain;
+  width: 30px;
+  height: 30px;
+  position: absolute;
+  opacity: 1;
+  transition: all 0.3s;
+}
+.contact_items:first-child:hover,
+.contact_items:nth-last-child(2):hover,
+.contact_items:last-child:hover {
+  background: linear-gradient(180deg, rgb(255, 183, 101), white);
+  width: 120px;
+  border-radius: 20px;
+}
+.contact_items:first-child:active,
+.contact_items:nth-last-child(2):active,
+.contact_items:last-child:active {
+  background: linear-gradient(0, rgb(255, 183, 101), white);
+}
+.contact_items:first-child::before,
+.contact_items:nth-last-child(2)::before,
+.contact_items:last-child::before {
+  transition: all 0.3s;
+  font-size: 18px;
+  font-weight: 600;
+  opacity: 0;
+}
+.contact_items:first-child::before {
+  content: "Vkontakte";
+}
+.contact_items:nth-last-child(2)::before {
+  content: "Whatsap";
+}
+.contact_items:last-child::before {
+  content: "Звонок";
+}
+.contact_items:first-child:hover::before,
+.contact_items:nth-last-child(2):hover::before,
+.contact_items:last-child:hover::before {
+  opacity: 1;
+}
+.contact_items:first-child:hover .contact_item_vk,
+.contact_items:nth-last-child(2):hover .contact_item_wsp,
+.contact_items:last-child:hover .contact_item_phone {
+  opacity: 0;
+}

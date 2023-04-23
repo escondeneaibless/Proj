@@ -1,0 +1,14 @@
+.buss {
+    padding: 0 20%;
+    background: url(../../images/background-menu.png);
+    background-size: cover;
+    animation: back 7s infinite;
+}
+@keyframes back {
+    0% {background-position: 0 0}
+    50% {background-position: 7px 0}
+    100% {background-position: 0 0}
+}
+.menu_content {
+    padding: 0 15%;
+}

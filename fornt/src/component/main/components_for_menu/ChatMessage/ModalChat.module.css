@@ -1,0 +1,104 @@
+.content {
+    width: 400px;
+    height: 300px;
+    background-color: #868686;
+    position: fixed;
+    left: 10%;
+    bottom: 150%;
+    border-radius: 20px;
+    z-index: 99;
+    transition: all .5s ease-in-out;
+}
+.content_off {
+    display: none;
+    opacity: 0;
+}
+.helper {
+    width: 100%;
+    height: 60px;
+    background-color: rgb(125, 255, 233);
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    box-sizing: border-box;
+    border-radius: 20px 20px 0 0;
+    gap: 10px;
+    font-size: 18px;
+    font-weight: 600;
+    border-bottom: 2px solid gray;
+    user-select: none;
+}
+.avatar svg{
+    border: 2px solid rgb(0, 0, 0);
+    border-radius: 50%;
+}
+.closeChat {
+    position: relative;
+    left: 52%;
+    font-size: 30px;
+}
+.closeChat p {
+    transition: all .5s;
+    cursor: pointer;
+}
+.closeChat:hover p{
+    transform: scale(1.1);
+}
+.chat_window {
+    width: 95%;
+    height: 65%;
+    background: url(../../../../images/Group\ 5bgchatmenu\ \(1\).png);
+    background-size: cover;
+    border: 2px solid gray;
+    box-sizing: border-box;
+    border-radius: 20px;
+    margin: 0 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: end;
+    align-items: end;
+
+}
+.stroke_enter {
+    height: 15%;
+    border-radius: 0 0 20px 20px;
+    background-color: rgb(125, 255, 233);
+    box-sizing: border-box;
+    padding: 0 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+}
+.stroke_enter input {
+    height: 80%;
+    width: 80%;
+    border: none;
+    border-radius: 10px;
+    padding: 0 10px;
+    font-size: 16px;
+}
+.stroke_enter input:focus {
+    outline: none;
+}
+.stroke_enter button {
+    background: none;
+    border: none;
+}
+.stroke_enter button svg path{
+    transition: all .3s;
+    fill: black;
+}
+.stroke_enter button:hover svg path{
+    fill: #007e83;
+}
+/* .child {
+    background-color: #fff;
+    border-radius: 20px;
+    margin: 10px;
+    width: 100px;
+    height: 40px;
+    display: grid;
+    place-content: center;
+    color: black;
+} */

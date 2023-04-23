@@ -1,0 +1,61 @@
+.container {
+  height: auto;
+  background-color: rgb(211, 211, 211);
+  padding: 4% 20%;
+}
+.header {
+  font-weight: 400;
+  font-size: 36px;
+  margin-bottom: 20px;
+}
+.card {
+  width: 300px;
+  height: 350px;
+  background-color: #fff;
+  display: flex;
+  flex-direction: column;
+
+  align-items: center;
+  text-align: center;
+  padding: 10px;
+  margin: 23px;
+  box-shadow: 0 0 15px black;
+  border-radius: 30px;
+  transition: all .4s;
+}
+.card:hover {
+  box-shadow: 0 0 20px rgb(255, 255, 255);
+  transform: scale(1.05);
+  
+}
+.card h1 {
+  font-size: 24px;
+}
+.card p {
+  height: 100px;
+}
+.nadcard {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+
+
+}
+.podcard {
+  position: relative;
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  gap: 10px;
+
+}
+.svg_card {
+  display: grid;
+  place-content: center;
+  width: 60px;
+  height: 60px;
+  border-radius: 40px;
+  background-color: aqua;
+  position: relative;
+  margin: 20% 0 10% 0;
+}
