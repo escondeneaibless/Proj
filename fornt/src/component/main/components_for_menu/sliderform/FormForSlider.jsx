@@ -1,6 +1,7 @@
 import React, { useState, useRef } from "react";
+import axios from "axios";
 import style from "../../Slider.module.css";
-import userPhoto from '../../../../imageForUsers/photo3.jpg'
+import userPhoto from "../../../../imageForUsers/photo3.jpg";
 import InputMask from "react-input-mask";
 import { useNavigate } from "react-router-dom";
 
@@ -8,35 +9,58 @@ const FormSlider = () => {
   const [selectedFile, setSelectFile] = useState(null);
   const [uploaded, setUploaded] = useState();
   const filePicker = useRef(null);
-  
-  const handleChange = (e) => { 
-    console.log(e.target.files);
-    setSelectFile(e.target.files[0]);
-  }
-  const handlePick = () => {
-    filePicker.current.click();
-  }
-  const handleUpload = async () => {
-    if (!selectedFile) {
-      alert('Please select a file');
-      return;
-    }
+  const [image, setImage] = useState(null);
+  const [error, setError] = useState(null);
 
+  const handleImageChange = (e) => {
+    setImage(e.target.files[0]);
+  };
+
+  const handleImageUpload = async () => {
     const formData = new FormData();
-    formData.append('file', selectedFile);
+    formData.append("image", image);
 
-    await fetch("http://localhost:5000/form_edit", {
-      mode: 'no-cors',
-      method: 'POST',
-      body: formData,
-    }).then(
-      data => {
-        setUploaded(data);
-      }
-    );
-    
-  }
+    try {
+      const res = await axios.post("http://localhost:5000/form_edit", formData);
+      console.log(res.data);
+    } catch (err) {
+      setError(err.message);
+    }
+  };
+  // const handleChange = (e) => {
+  //   console.log(e.target.files);
+  //   setSelectFile(e.target.files[0]);
+  // };
+  // const handlePick = () => {
+  //   filePicker.current.click();
+  // };
+  // const handleUpload = async () => {
+  //   if (!selectedFile) {
+  //     alert("Please select a file");
+  //     return;
+  //   }
+  //   try {
+  //     const formData = new FormData();
+  //     formData.append("file", selectedFile);
 
+  //     await fetch("http://localhost:5000/form_edit", {
+  //       method: "POST",
+  //       body: formData,
+  //       headers: {
+  //         'Content-Type': 'multipart/form-data'
+  //       }
+  //     }).then((response) => {
+  //       if (!response.ok) {
+  //         throw new Error('Network response was not ok');
+  //       }
+  //       return response.json();
+  //     }).then((data) => {
+  //       setUploaded(data);
+  //     });
+  //   } catch (e) {
+  //     console.log(e);
+  //   }
+  // };
 
   const navigate = useNavigate();
   const [stateFirst, setStateFirst] = useState(true);
@@ -174,36 +198,39 @@ const FormSlider = () => {
               </form>
             </div>
 
-                  {/* Загрузка фото */}
+            {/* Загрузка фото */}
             <div className={style.box_image}>
-              <button className={style.edit_image_btn}
-              onClick={handleUpload}
-
-              >Загрузить</button>
+              {/* <button className={style.edit_image_btn} onClick={handleUpload}>
+                Загрузить
+              </button>
               <button onClick={handlePick}>Выбрать изображение</button>
-              <input type="file" className={style.image_edit} 
-              id="image"
-              ref={filePicker}
-              onChange={(e) => handleChange(e)}
-              accept="image/*,.png,.jpg"
-              />
-
+              <input
+                type="file"
+                className={style.image_edit}
+                id="image"
+                ref={filePicker}
+                onChange={(e) => handleChange(e)}
+                accept="image/*,.png,.jpg"
+              /> */}
+              <input type="file" onChange={handleImageChange} />
+              <button onClick={handleImageUpload}>Upload Image</button>
+              {error && <p>Error: {error}</p>}
               <div className={style.loading_image}>
-                <img className={style.imageEdit} 
-                id="image2"
-                alt="your imaged" 
+                <img
+                  className={style.imageEdit}
+                  id="image2"
+                  alt="your imaged"
                 />
-                
               </div>
               <button className={style.edit_image_btn}>Сохранить</button>
             </div>
             {/* Загрузка фото */}
-                  {uploaded && (
-                    <div>
-                      <h2>{uploaded.filename}</h2>
-                      <img src={uploaded.filePath} alt="" width="200"/>
-                    </div>
-                  )}
+            {uploaded && (
+              <div>
+                <h2>{uploaded.filename}</h2>
+                <img src={uploaded.filePath} alt="" width="200" />
+              </div>
+            )}
           </div>
           <div className={style.box_enter}>
             <input type="checkbox" className={style.form_check} />
