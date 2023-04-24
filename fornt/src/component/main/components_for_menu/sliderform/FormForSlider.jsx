@@ -1,5 +1,6 @@
 import React, { useState, useRef } from "react";
 import axios from "axios";
+import api from '../../../../services/apiAxios';
 import style from "../../Slider.module.css";
 import userPhoto from "../../../../imageForUsers/photo3.jpg";
 import InputMask from "react-input-mask";
@@ -14,6 +15,7 @@ const FormSlider = () => {
 
   const handleImageChange = (e) => {
     setImage(e.target.files[0]);
+    setUploaded(URL.createObjectURL(e.target.files[0]));
   };
 
   const handleImageUpload = async () => {
@@ -21,47 +23,21 @@ const FormSlider = () => {
     formData.append("image", image);
 
     try {
-      const res = await axios.post("http://localhost:5000/form_edit", formData);
-      console.log(res.data);
+      const res = await api.post("/form_edit", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+      // setUploaded(formData.image)
+      console.log(res);
     } catch (err) {
       setError(err.message);
-      
     }
   };
-  // const handleChange = (e) => {
-  //   console.log(e.target.files);
-  //   setSelectFile(e.target.files[0]);
-  // };
-  // const handlePick = () => {
-  //   filePicker.current.click();
-  // };
-  // const handleUpload = async () => {
-  //   if (!selectedFile) {
-  //     alert("Please select a file");
-  //     return;
-  //   }
-  //   try {
-  //     const formData = new FormData();
-  //     formData.append("file", selectedFile);
-
-  //     await fetch("http://localhost:5000/form_edit", {
-  //       method: "POST",
-  //       body: formData,
-  //       headers: {
-  //         'Content-Type': 'multipart/form-data'
-  //       }
-  //     }).then((response) => {
-  //       if (!response.ok) {
-  //         throw new Error('Network response was not ok');
-  //       }
-  //       return response.json();
-  //     }).then((data) => {
-  //       setUploaded(data);
-  //     });
-  //   } catch (e) {
-  //     console.log(e);
-  //   }
-  // };
+  
+  const handlePick = () => {
+    filePicker.current.click();
+  };
 
   const navigate = useNavigate();
   const [stateFirst, setStateFirst] = useState(true);
@@ -200,8 +176,8 @@ const FormSlider = () => {
             </div>
 
             {/* Загрузка фото */}
-            <div className={style.box_image}>
-              {/* <button className={style.edit_image_btn} onClick={handleUpload}>
+             <div className={style.box_image}>
+              <button className={style.edit_image_btn} onClick={handleImageUpload}>
                 Загрузить
               </button>
               <button onClick={handlePick}>Выбрать изображение</button>
@@ -210,17 +186,17 @@ const FormSlider = () => {
                 className={style.image_edit}
                 id="image"
                 ref={filePicker}
-                onChange={(e) => handleChange(e)}
+                onChange={handleImageChange}
                 accept="image/*,.png,.jpg"
-              /> */}
-              <input type="file" onChange={handleImageChange} />
-              <button onClick={handleImageUpload}>Upload Image</button>
+              /> 
+             
               {error && <p>Error: {error}</p>}
               <div className={style.loading_image}>
                 <img
                   className={style.imageEdit}
                   id="image2"
                   alt="your imaged"
+                  src= {uploaded || userPhoto}
                 />
               </div>
               <button className={style.edit_image_btn}>Сохранить</button>
