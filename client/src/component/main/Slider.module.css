@@ -427,7 +427,7 @@
     right: 380px;
     margin-bottom: -50px;
     
-    z-index: 99;
+    z-index: 1;
 }
 .btn_slider:hover {
     color: white;

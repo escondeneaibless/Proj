@@ -1,6 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
+import api from '../../../services/apiAxios'
 import style from "./Registration.module.css";
 import { useNavigate } from "react-router-dom";
+import InputMask from "react-input-mask";
 
 const Registration = () => {
   const [stateName, setStateName] = useState(true);
@@ -10,6 +12,9 @@ const Registration = () => {
   const [name, setName] = useState("");
   const [login, setLogin] = useState("");
   const [password, setPassword] = useState("");
+  const [statePhone, setStatePhone] = useState(true);
+  const [phone, setPhone] = useState("");
+  const [inputs, setInputs] = useState({});
   const nameHandler = (e) => {
     setName(e.target.value);
     if (e.target.value == 0) {
@@ -18,12 +23,15 @@ const Registration = () => {
       setStateName(false);
     }
   };
-  const loginHandler = (e) => {
-    setLogin(e.target.value);
+  const phoneHandler = (e) => {
+    setPhone(e.target.value);
+    const name = e.target.name;
+    const value = e.target.value;
+    setInputs((values) => ({ ...values, [name]: value }));
     if (e.target.value == 0) {
-      setStateLog(true);
+      setStatePhone(true);
     } else {
-      setStateLog(false);
+      setStatePhone(false);
     }
   };
   const passwordHandler = (e) => {
@@ -36,6 +44,29 @@ const Registration = () => {
   };
   const navigate = useNavigate();
   const [showResults, setShowResults] = useState(false);
+
+  //Enter form
+  const [uploaded, setUploaded] = useState();
+  const filePicker = useRef(null);
+  const [image, setImage] = useState(null);
+  const [error, setError] = useState(null);
+
+  const handleFormUpload = async () => {
+    const formData = new FormData();
+    formData.append("number", );
+    try {
+      const res = await api.post("/form_edit", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+      // setUploaded(formData.image)
+      console.log(res);
+    } catch (err) {
+      setError(err.message);
+    }
+  };
+
 
   return (
     <>
@@ -55,27 +86,31 @@ const Registration = () => {
               type="text"
               onChange={(e) => nameHandler(e)}
               value={name}
+              name="name"
             />
             <label className={stateName ? style.modal_name_lab : style.name_off}>
               Name
             </label>
             <div className={style.line}></div>
-            <input
-              className={style.login}
-              type="text"
-              onChange={(e) => loginHandler(e)}
-              value={login}
-            />
-            <label className={stateLog ? style.modal_log_lab : style.login_off}>
-              Login
+            <InputMask
+                  mask="+7(999)-999-99-99"
+                  className={style.input_form}
+                  id={style.three}
+                  onChange={(e) => phoneHandler(e)}
+                  value={phone}
+                  name="phone"
+                  type="text"
+                />
+            <label className={statePhone ? style.modal_log_lab : style.login_off}>
+              Phone
             </label>
             <div className={style.line}></div>
-
             <input
               className={style.pass}
               type="text"
               onChange={(e) => passwordHandler(e)}
               value={password}
+              name="password"
             />
             <label
               className={statePas ? style.modal_pass_lab : style.password_off}
@@ -84,11 +119,7 @@ const Registration = () => {
             </label>
 
             <div className={style.modal_btn}>
-              <button
-                className={style.modal_entrance}
-              >
-                Зарегистрироваться
-              </button>
+              <button className={style.modal_entrance} onClick={handleFormUpload}>Зарегистрироваться</button>
             </div>
           </div>
         </div>

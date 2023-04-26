@@ -1,5 +1,4 @@
 import React, { useState, useRef } from "react";
-import axios from "axios";
 import api from '../../../../services/apiAxios';
 import style from "../../Slider.module.css";
 import userPhoto from "../../../../imageForUsers/photo3.jpg";

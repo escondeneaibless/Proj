@@ -8,6 +8,7 @@ const app = express();
 const path = require('path');
 const bodyParser = require('body-parser');
 const mv = require("mv");
+// const authRouter = require('./middleware/authRouter');
 app.use(cors({ origin: '*' }));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
@@ -17,10 +18,7 @@ app.use(session({
   saveUninitialized: true,
   cookie: { maxAge: 60000 }
 }));
-// app.use(fileUpload({
-//   createParentPath: true,
-// }));
-// app.use(fileUpload({ createParentPath: true }));
+// app.use("/auth", authRouter)
 app.use(express.json()); app.use(express.urlencoded({ extended: true }));
 app.use(express.static(__dirname + '/static'));
 app.set("view engine", "hbs");
@@ -59,25 +57,30 @@ const urlencodedParser = express.urlencoded({ extended: false });
 
    });
  });
+
  // получение данных и добавление их в БД 
  app.post("/createUser", urlencodedParser, function (req, res) {
    if (!req.body) return res.sendStatus(400);
-   const firstname = req.body.firstname;
-   const lastname = req.body.lastname;
-   const email = req.body.email;
-   const number = req.body.number;
-   const password = req.body.password;
-   pool.query("INSERT INTO user (firstname, lastname, number, email, password) VALUES (?,?,?,?,?)", [firstname, lastname, number, email, password], function (err, data) {
+   const {name, phone, password} = req.body;
+   pool.query("INSERT INTO Users (name, phone, password) VALUES (?,?,?)", [name, phone, password], function (err, data) {
+     if (err) { return console.log(err) };
+     res.send(data);
+    //  res.redirect("/");
+
+   });
+ });
+ // получение данных и добавление их в БД 
+ app.post("/regist", urlencodedParser, function (req, res) {
+   if (!req.body) return res.sendStatus(400);
+
+   const {phone, mail} = req.body;
+   pool.query("INSERT INTO forms (phone, mail) VALUES (?,?)", [phone, mail], function (err, data) {
      if (err) { return console.log(err) };
      res.send(data)
      // res.redirect("/");
 
    });
  });
-
-
-
-
 
 //Добавление фото в форме
 app.post("/form_edit", (req, res) => {
@@ -110,9 +113,6 @@ app.post("/form_edit", (req, res) => {
       
     })
 });
-
-
-
 
 //Аутентификация
 app.get('/login', (req, res) => {
