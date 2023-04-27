@@ -69,23 +69,22 @@ const urlencodedParser = express.urlencoded({ extended: false });
 
    });
  });
- // получение данных и добавление их в БД 
+ // Registration
  app.post("/regist", urlencodedParser, function (req, res) {
-   if (!req.body) return res.sendStatus(400);
-
-   const {phone, mail} = req.body;
-   pool.query("INSERT INTO forms (phone, mail) VALUES (?,?)", [phone, mail], function (err, data) {
-     if (err) { return console.log(err) };
-     res.send(data)
-     // res.redirect("/");
-
-   });
- });
+    const form = formidable({multiples: false});
+    form.parse(req, (err, forms, form) => {
+      if(err){console.log(err)};
+        pool.query('INSERT INTO Users (name, phone, password) VALUES (?,?,?)', [forms[0], forms[1], forms[2]], (err, result) => {
+        if (err) {console.log(err)};
+        res.send(result);
+    });
+  })
+});
 
 //Добавление фото в форме
 app.post("/form_edit", (req, res) => {
     const form = formidable({ multiples: false });
-    form.parse(req, (err, fields, files) => {
+    form.parse(req, (err, fields, files) => { 
       if (err) {
         console.error(err);
         res.writeHead(500, { "Content-Type": "application/json" });
@@ -106,12 +105,6 @@ app.post("/form_edit", (req, res) => {
         }
       );
     });
-    pool.query('SELECT * FROM user', (req, res) => {
-      let hl = req.body;
-      let firstName = hl.firstName;
-      let lastName = hl.lastName;
-      
-    })
 });
 
 //Аутентификация

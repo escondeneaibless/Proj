@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState} from "react";
 import api from '../../../services/apiAxios'
 import style from "./Registration.module.css";
 import { useNavigate } from "react-router-dom";
@@ -6,11 +6,11 @@ import InputMask from "react-input-mask";
 
 const Registration = () => {
   const [stateName, setStateName] = useState(true);
-  const [stateLog, setStateLog] = useState(true);
+  // const [stateLog, setStateLog] = useState(true);
   const [statePas, setStatePas] = useState(true);
-  const [show, setShow] = useState(false);
+  // const [show, setShow] = useState(false);
   const [name, setName] = useState("");
-  const [login, setLogin] = useState("");
+  // const [login, setLogin] = useState("");
   const [password, setPassword] = useState("");
   const [statePhone, setStatePhone] = useState(true);
   const [phone, setPhone] = useState("");
@@ -46,16 +46,13 @@ const Registration = () => {
   const [showResults, setShowResults] = useState(false);
 
   //Enter form
-  const [uploaded, setUploaded] = useState();
-  const filePicker = useRef(null);
   const [image, setImage] = useState(null);
   const [error, setError] = useState(null);
-
-  const handleFormUpload = async () => {
-    const formData = new FormData();
-    formData.append("number", );
+  const handleRegistUpload = async () => {
+    let formData = [];
+    formData.push(name, phone, password);
     try {
-      const res = await api.post("/form_edit", formData, {
+      const res = await api.post("/regist", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
@@ -119,7 +116,7 @@ const Registration = () => {
             </label>
 
             <div className={style.modal_btn}>
-              <button className={style.modal_entrance} onClick={handleFormUpload}>Зарегистрироваться</button>
+              <button className={style.modal_entrance} onClick={handleRegistUpload}>Зарегистрироваться</button>
             </div>
           </div>
         </div>
