@@ -7,6 +7,7 @@ import Menu from "./component/main/Menu";
 import Footer from "./component/footer/Footer";
 import Chat from "./component/main/components_for_menu/ChatMessage/ModalChat";
 
+
 function App() {
   const [slide, setSlide] = useState(true)
   const handleShow = event => {

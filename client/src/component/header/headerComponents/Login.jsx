@@ -1,14 +1,16 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import api from '../../../services/apiAxios'
 import style from "./Login.module.css";
 import { useNavigate } from "react-router-dom";
+import InputMask from "react-input-mask";
 
 const Login = () => {
   const navigate = useNavigate();
-
   const [status, setStatus] = useState(true);
   const [state, setState] = useState(true);
   const [logg, setLogin] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState(null);
   const loginHandler = (e) => {
     setLogin(e.target.value);
     if (e.target.value == 0) {
@@ -26,7 +28,44 @@ const Login = () => {
     }
   };
   const [showResults, setShowResults] = useState(false);
+  const [backendData, setBackendData] = useState([]);
+    try {
+    useEffect(() => {
+        fetch("/login")
+          .then((response) => response.json())
+          .then((data) => {
+            setBackendData(data);
+          });
+      }, []);
+      
+    }catch (e){
+      console.log(e);
+    }
+  const handleLoginUpload = async () => {
+    const formData = [];
+    formData.push(logg, password);
+    console.log(formData)
+    if (logg && password) {
+      try {
+        const res = await api.post("/login", formData, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        });
+        // setUploaded(formData.image)
+        console.log(res);
+        alert("Вход выполнен")
+      } catch (err) {
+        setError(err.message);
+      };
+    }else{alert('Вы не заполнили форму')}
 
+    
+  };
+  //+7(123)-123-12-31
+  //(927)-133-41-29
+  //qweqwe
+  
   return (
     <>
       <div className={style.modal} onClick={() => setShowResults(false)}>
@@ -42,13 +81,14 @@ const Login = () => {
           ></div>
           <div className={style.modal_form}>
             <form method="GET">
-              <input
-                className={style.login}
-                type="text"
-                onChange={(e) => loginHandler(e)}
-                value={logg}
-                name="number"
-              />
+              <InputMask
+                  mask="+7(999)-999-99-99"
+                  className={style.login}
+                  onChange={(e)=> loginHandler(e)}
+                  value={logg}
+                  name="phone"
+                  type="text"
+                />
               <label className={status ? style.modal_log_lab : style.login_off}>
                 Number
               </label>
@@ -67,7 +107,7 @@ const Login = () => {
               </label>
             </form>
             <div className={style.modal_btn}>
-              <button className={style.modal_entrance}>Войти</button>
+              <button className={style.modal_entrance} onClick={handleLoginUpload}>Войти</button>
             </div>
           </div>
         </div>

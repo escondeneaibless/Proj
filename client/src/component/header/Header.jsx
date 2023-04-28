@@ -10,6 +10,8 @@ import {
 } from "react-router-dom";
 import Login from "./headerComponents/Login";
 import Registration from "./headerComponents/Registration";
+import Client from "./headerComponents/Client";
+import Forms from "./headerComponents/AdminComponents/Forms";
 const Header = () => {
   const [states, setState] = useState(false);
   const [backdate, setBackdate] = useState([]);
@@ -32,6 +34,8 @@ const Header = () => {
       <Route path="/" element={<Root />}>
         <Route path="/login" element={<Login props={{states}}/>} />
         <Route path="/regist" element={<Registration />} />
+        <Route path="/forms" element={<Forms />} />
+        <Route path="/client" element={<Client />} />
       </Route>
     )
   );
@@ -109,6 +113,11 @@ const Root = (props) => {
           </button>
         </Link>
       </div>
+      <Link to="/client">
+      <button className={style.btn_items} id={style.btn3}>
+            Admin
+        </button>
+      </Link>
       <div>
         <Outlet />
       </div>

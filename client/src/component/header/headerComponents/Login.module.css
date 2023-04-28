@@ -73,6 +73,7 @@
   box-shadow: inset 0 0 0 0 #725ac1;
   letter-spacing: 1px;
   font-weight: 600;
+  cursor: pointer;
 }
 .modal_form button:last-child:hover {
   box-shadow: inset 0 100px 0 0 #725ac1;
@@ -81,6 +82,11 @@
 .modal_form button:first-child:hover {
   box-shadow: inset 0 -100px 0 0 #725ac1;
   color: white;
+}
+.modal_form button:active {
+  transition: all .01s;
+  border: 2px solid white;
+
 }
 .line {
   position: relative;

@@ -198,6 +198,12 @@ Link {
   opacity: 0;
   transform: translateY(5px);
 }
+#btn3 {
+  position: absolute;
+  top: 13px;
+  right: 0;
+  border-radius: 5px;
+}
 .btn_items {
   height: 35px;
   width: 100px;

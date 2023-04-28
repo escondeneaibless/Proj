@@ -57,7 +57,7 @@ const Registration = () => {
           "Content-Type": "multipart/form-data",
         },
       });
-      // setUploaded(formData.image)
+      alert('Вы зарегистрировались');
       console.log(res);
     } catch (err) {
       setError(err.message);
