@@ -13,33 +13,25 @@ import Registration from "./headerComponents/Registration";
 import Client from "./headerComponents/Client";
 import Forms from "./headerComponents/AdminComponents/Forms";
 const Header = () => {
-  const [states, setState] = useState(false);
-  const [backdate, setBackdate] = useState([]);
-  useEffect(() => {
-    fetch("/login")
-      .then((response) => response.json())
-      .then((data) => {
-        setBackdate(data);
-      });
-  }, []);
-  const changeState = () => {
-    if (typeof backdate === 'undefined') {
-      setState(false);
-    }else{
-      setState(true);
-    }
-  }
+  const [name, setName] = useState('');
+
+  // const NameChange = (name) => {
+  //   setName(name)
+  // }
   const router = createBrowserRouter(
     createRoutesFromElements(
       <Route path="/" element={<Root />}>
-        <Route path="/login" element={<Login props={{states}}/>} />
+        {/* onChange={NameChange} */}
+        <Route path="/login" element={<Login />} /> 
         <Route path="/regist" element={<Registration />} />
         <Route path="/forms" element={<Forms />} />
         <Route path="/client" element={<Client />} />
       </Route>
     )
   );
-  
+  useEffect (() => {
+    console.log(name)
+  }, [])
   
   return (
     <>
@@ -68,7 +60,7 @@ const Header = () => {
         <div className={style.header_btn_content}>
           <div className={style.header_block}>
             <a className={style.btn_items} href="#Me">
-              О нас
+              О нас 
             </a>
             <button className={style.btn_items}>Отзывы</button>
             <div className="App">
@@ -113,7 +105,9 @@ const Root = (props) => {
           </button>
         </Link>
       </div>
-      <Link to="/client">
+      
+      <Link to="/client"
+        >
       <button className={style.btn_items} id={style.btn3}>
             Admin
         </button>

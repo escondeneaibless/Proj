@@ -41,24 +41,38 @@ const urlencodedParser = express.urlencoded({ extended: false });
  });
  const upload = multer({ storage: storage });
 
+// app.get('/client', async (req, res) => {
+//   try {
+//     pool.query("SELECT * FROM Users", (err, result) => {
+//       if (err) {res.send(err)};
+//       res.json(result)
+//     })
+//   } catch (error) {
+//     console.error(error);
+//     res.status(500).json({ error: 'Ошибка сервера' });
+//   }
+// });
 
- // получение списка пользователей
- app.get("/view", function (req, res) {
-   pool.query("SELECT * FROM user", (err, result) => {
-     if (err) {
-       console.log(err)
-     } else {
-       let mas = [];
-       for (var i = 0; i < result.length; i++) {
-         let str = (`${result[i].firstname}  ${result[i].lastname} - - - ${result[i].password}`);
-         mas.push(str);
-       }
-       res.send(mas);
+app.get('/client', async (req, res) => {
+  const sql1 = "SELECT * FROM Users";
+  const sql2 = "SELECT * FROM forms";
+  try {
+    pool.query(sql1, (err, result,) => {
+      if (err) {res.send(err)};
+      // res.json(result)
 
-     }
-
-   });
- });
+      pool.query(sql2, (err, results)=> {
+        if (err) {res.send(err)};
+        // res.json(results)
+        res.send([{ "user":result}, {"form":JSON.stringify(results)}]);
+      })
+      
+    })
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Ошибка сервера' });
+  }
+});
 
  // получение данных и добавление их в БД 
  app.post("/createUser", urlencodedParser, function (req, res) {
@@ -97,7 +111,6 @@ app.post('/login', (req, res) => {
                 console.log(`${file[0]} ${file[1]} ${result[i].phone} ${result[i].password}`);
                 res.sendStatus(200);
                 return console.log(`Ok`);
-
               }            
             }
             

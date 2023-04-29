@@ -4,7 +4,7 @@ import style from "./Login.module.css";
 import { useNavigate } from "react-router-dom";
 import InputMask from "react-input-mask";
 
-const Login = () => {
+const Login = ({onChange}) => {
   const navigate = useNavigate();
   const [status, setStatus] = useState(true);
   const [state, setState] = useState(true);
@@ -27,8 +27,10 @@ const Login = () => {
       setState(false);
     }
   };
+
   const [showResults, setShowResults] = useState(false);
   const [backendData, setBackendData] = useState([]);
+  const [callback, setCallback] = useState(false);
     try {
     useEffect(() => {
         fetch("/login")
@@ -55,16 +57,17 @@ const Login = () => {
         // setUploaded(formData.image)
         console.log(res);
         alert("Вход выполнен")
+        if (logg === "Admin" && password === "root") {
+          setCallback(true);
+          onChange(callback)
+ 
+        }
       } catch (err) {
         setError(err.message);
       };
     }else{alert('Вы не заполнили форму')}
-
-    
   };
-  //+7(123)-123-12-31
-  //(927)-133-41-29
-  //qweqwe
+
   
   return (
     <>
@@ -90,7 +93,7 @@ const Login = () => {
                   type="text"
                 />
               <label className={status ? style.modal_log_lab : style.login_off}>
-                Number
+                Number 
               </label>
 
               <input
