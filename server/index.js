@@ -60,18 +60,29 @@ app.get('/client', async (req, res) => {
     pool.query(sql1, (err, result,) => {
       if (err) {res.send(err)};
       // res.json(result)
-
       pool.query(sql2, (err, results)=> {
         if (err) {res.send(err)};
         // res.json(results)
         res.send([{ "user":result}, {"form":JSON.stringify(results)}]);
-      })
-      
+      })     
     })
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: 'Ошибка сервера' });
   }
+});
+
+app.post("/client", urlencodedParser, (req, res) => {
+  const form = formidable({multiples: false});
+  form.parse(req, (err, forms, form) => {
+    if(err){console.log(err)};
+      pool.query('UPDATE Users SET role=? WHERE id=?', [forms[1] ,forms[0]], (err, result) => {
+      if(err){console.log(err)}else{
+        console.log('Role updated');
+      return res.send(result);
+      };      
+  });
+})
 });
 
  // получение данных и добавление их в БД 
@@ -108,16 +119,15 @@ app.post('/login', (req, res) => {
           if (file) {
             for (let i = 0; i <= result.length; i++) {
               if (file[0] == result[i].phone && file[1] === result[i].password) {
-                console.log(`${file[0]} ${file[1]} ${result[i].phone} ${result[i].password}`);
-                res.sendStatus(200);
-                return console.log(`Ok`);
+                res.sendStatus(200);               
+                return console.log(`Ok`);     
               }            
             }
             
           }
           else {
             res.json('Empty line');
-            console.log(file);
+            return console.log(file);
             
           }
         }

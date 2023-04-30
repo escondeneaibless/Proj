@@ -13,25 +13,33 @@ import Registration from "./headerComponents/Registration";
 import Client from "./headerComponents/Client";
 import Forms from "./headerComponents/AdminComponents/Forms";
 const Header = () => {
+  const [list, setList] = useState([]);
   const [name, setName] = useState('');
+  useEffect(() => {
+    const fetchList = async () => {
+      try {
+        const response = await fetch('http://localhost:5000/client'); 
+        const data = await response.json();
+        setList(data);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    fetchList();
+  }, []);
 
-  // const NameChange = (name) => {
-  //   setName(name)
-  // }
+
   const router = createBrowserRouter(
     createRoutesFromElements(
       <Route path="/" element={<Root />}>
         {/* onChange={NameChange} */}
-        <Route path="/login" element={<Login />} /> 
+        <Route path="/login" element={<Login/>} /> 
         <Route path="/regist" element={<Registration />} />
         <Route path="/forms" element={<Forms />} />
-        <Route path="/client" element={<Client />} />
+        <Route path="/client" element={<Client props={list}/>} />
       </Route>
     )
   );
-  useEffect (() => {
-    console.log(name)
-  }, [])
   
   return (
     <>

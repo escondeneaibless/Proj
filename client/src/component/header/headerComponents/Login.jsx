@@ -4,7 +4,7 @@ import style from "./Login.module.css";
 import { useNavigate } from "react-router-dom";
 import InputMask from "react-input-mask";
 
-const Login = ({onChange}) => {
+const Login = () => {
   const navigate = useNavigate();
   const [status, setStatus] = useState(true);
   const [state, setState] = useState(true);
@@ -46,7 +46,6 @@ const Login = ({onChange}) => {
   const handleLoginUpload = async () => {
     const formData = [];
     formData.push(logg, password);
-    console.log(formData)
     if (logg && password) {
       try {
         const res = await api.post("/login", formData, {
@@ -54,13 +53,10 @@ const Login = ({onChange}) => {
             "Content-Type": "multipart/form-data",
           },
         });
-        // setUploaded(formData.image)
         console.log(res);
         alert("Вход выполнен")
-        if (logg === "Admin" && password === "root") {
+        if (logg === "+7(000)-000-00-00" && password === "root") {
           setCallback(true);
-          onChange(callback)
- 
         }
       } catch (err) {
         setError(err.message);
