@@ -4,7 +4,7 @@ import style from "./Login.module.css";
 import { useNavigate } from "react-router-dom";
 import InputMask from "react-input-mask";
 
-const Login = () => {
+const Login = ({props}) => {
   const navigate = useNavigate();
   const [status, setStatus] = useState(true);
   const [state, setState] = useState(true);
@@ -47,6 +47,7 @@ const Login = () => {
     const formData = []; 
     formData.push(logg, password); 
     if (logg && password) {
+      if (logg==="+7(902)-667-22-46" && password ==="qweqwe") {localStorage.setItem('text', password); }    
       try {
         const res = await api.post("/login", formData, {
           headers: {

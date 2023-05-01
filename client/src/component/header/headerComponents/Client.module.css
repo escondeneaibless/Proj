@@ -138,3 +138,41 @@
 .items:first-child{
     border: none
 }
+
+.formsUsers {
+    display: grid;
+    grid-template-columns: 400px 400px;
+    gap: 120px;
+    padding-right: 80px;
+}
+.listForms {
+    width: 500px;
+    display: flex;
+    flex-direction: column;
+    border: 5px solid black;
+    border-radius: 10px;
+    align-items: start;
+
+}
+.imageForms {
+    width: 500px;
+    height: 350px;
+}
+.dateForm {
+    width: 300px;
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    margin: 5px 0 10px 5px;
+}
+.itemsForm {
+    margin-left: 10px;
+}
+.controlForm {
+    width: 200px;
+   display: flex;
+   gap: 20px;
+   flex-direction: column;
+   justify-content: center;
+   align-items: end;
+}

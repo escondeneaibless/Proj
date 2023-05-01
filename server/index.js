@@ -65,12 +65,18 @@ app.post("/client", urlencodedParser, (req, res) => {
   const form = formidable({ multiples: false });
   form.parse(req, (err, forms, form) => {
     if (err) { console.log(err) };
-    pool.query('UPDATE Users SET role=? WHERE id=?', [forms[1], forms[0]], (err, result) => {
-      if (err) { console.log(err) } else {
-        console.log('Role updated');
-        return res.send(result);
-      };
-    });
+    console.log(forms);
+    if (forms[0] === "status") {
+      pool.query(forms[3], [forms[2], forms[1]], (err, result) => {
+        if (err) { console.log(err) };
+        console.log("updated")
+      })
+    } else {
+      pool.query(forms[2], [forms[1]], (err, result) => {
+        if (err) { console.log(err) };
+        console.log("deleted")
+      })
+    }
   })
 });
 
@@ -126,13 +132,10 @@ app.post("/form_edit", (req, res) => {
       return;
     }
     const { image } = files;
-    // const newFileName = image.originalFilename;
-
     function generateUniqueFileName(fileExtension) {
       const uniqueFilename = uuidv4();
       return uniqueFilename + fileExtension;
     }
-
     // Пример использования функции
     const oldFilePath = image.originalFilename;
     const fileExtension = path.extname(oldFilePath);

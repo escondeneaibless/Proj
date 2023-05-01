@@ -11,11 +11,10 @@ import {
 import Login from "./headerComponents/Login";
 import Registration from "./headerComponents/Registration";
 import Client from "./headerComponents/Client";
-import Forms from "./headerComponents/AdminComponents/Forms";
+
 const Header = () => {
   const [list, setList] = useState([]);
-  const [name, setName] = useState('');
-  
+
   useEffect(() => {
     const fetchList = async () => {
       try {
@@ -32,12 +31,11 @@ const Header = () => {
 
   const router = createBrowserRouter(
     createRoutesFromElements(
-      <Route path="/" element={<Root />}>
+      <Route path="/" element={<Root/>}>
         {/* onChange={NameChange} */}
         <Route path="/login" element={<Login/>} /> 
         <Route path="/regist" element={<Registration />} />
-        <Route path="/forms" element={<Forms />} />
-        <Route path="/client" element={<Client props={list}/>} />
+        <Route path="/client/*" element={<Client props={list}/>} />
       </Route>
     )
   );
@@ -85,7 +83,11 @@ const Header = () => {
   );
 };
 
-const Root = (props) => {
+const Root = () => {
+  const [name, setName] = useState(false);
+  useEffect(() => {
+    localStorage.getItem('text')==="qweqwe"? setName(true) : setName(false);
+  }, [])
   return (
     <>
       <div className={style.header_btn_content}>
@@ -114,13 +116,14 @@ const Root = (props) => {
           </button>
         </Link>
       </div>
-      
-      <Link to="/client"
+      {name ? <Link to="/client"
         >
       <button className={style.btn_items} id={style.btn3}>
             Admin
         </button>
-      </Link>
+      </Link> : ''}
+      
+
       <div>
         <Outlet />
       </div>
