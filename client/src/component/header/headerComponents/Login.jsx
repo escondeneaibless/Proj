@@ -44,8 +44,8 @@ const Login = () => {
       console.log(e);
     }
   const handleLoginUpload = async () => {
-    const formData = [];
-    formData.push(logg, password);
+    const formData = []; 
+    formData.push(logg, password); 
     if (logg && password) {
       try {
         const res = await api.post("/login", formData, {
@@ -55,9 +55,6 @@ const Login = () => {
         });
         console.log(res);
         alert("Вход выполнен")
-        if (logg === "+7(000)-000-00-00" && password === "root") {
-          setCallback(true);
-        }
       } catch (err) {
         setError(err.message);
       };

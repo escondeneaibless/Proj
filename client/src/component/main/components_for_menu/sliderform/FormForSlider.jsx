@@ -20,6 +20,12 @@ const FormSlider = () => {
   const handleImageUpload = async () => {
     const formData = new FormData();
     formData.append("image", image);
+    formData.append('firstName', firstName);
+    formData.append('lastName', lastName);
+    formData.append('phone', phone);
+    formData.append('mail', mail);
+    
+   
 
     try {
       const res = await api.post("/form_edit", formData, {
@@ -176,9 +182,9 @@ const FormSlider = () => {
 
             {/* Загрузка фото */}
              <div className={style.box_image}>
-              <button className={style.edit_image_btn} onClick={handleImageUpload}>
+              {/* <button className={style.edit_image_btn} onClick={handleImageUpload}>
                 Загрузить
-              </button>
+              </button> */}
               <button onClick={handlePick}>Выбрать изображение</button>
               <input
                 type="file"
@@ -198,7 +204,7 @@ const FormSlider = () => {
                   src= {uploaded || userPhoto}
                 />
               </div>
-              <button className={style.edit_image_btn}>Сохранить</button>
+              {/* <button className={style.edit_image_btn}>Сохранить</button> */}
             </div>
             {/* Загрузка фото */}
             {uploaded && (
@@ -214,7 +220,7 @@ const FormSlider = () => {
               я принимаю&nbsp;<a href="">условия передачи информации</a>
             </p>
             <button
-              onClick={() => navigate(-1)}
+              onClick={handleImageUpload}
               className={style.btn_slider_box}
             >
               Отправить

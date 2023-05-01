@@ -15,6 +15,7 @@ import Forms from "./headerComponents/AdminComponents/Forms";
 const Header = () => {
   const [list, setList] = useState([]);
   const [name, setName] = useState('');
+  
   useEffect(() => {
     const fetchList = async () => {
       try {

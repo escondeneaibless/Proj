@@ -3,6 +3,7 @@ import api from '../../../services/apiAxios'
 import style from './Client.module.css';
 import { Link } from "react-router-dom";
 import Forms from './AdminComponents/Forms'
+import { useNavigate } from "react-router-dom";
 
 function Client({ props }) {
   const [backend, setBackend] = useState([]);
@@ -11,26 +12,11 @@ function Client({ props }) {
   const [showlist, setShowList] = useState(false);
   const [showform, setShowForm] = useState(true);
   const [error, setError] = useState(null);
+  const navigate = useNavigate();
   const handleUser = (e) => {
     setListUser(e.target.value);
     console.log(e.target.value);
   }
-
-  // const handleRoleUpload = async () => {
-  //   let formData = [];
-  //   formData.push(listUser);
-  //   try {
-  //     const res = await api.post("/client", formData, {
-  //       headers: {
-  //         "Content-Type": "multipart/form-data",
-  //       },
-  //     });
-  //     console.log(res);
-  //   } catch (err) {
-  //     setError(err.message);
-  //   }
-  // };
-
   const handleList = () => {
     setShowList(false)
     setShowForm(true)
@@ -39,12 +25,20 @@ function Client({ props }) {
     setShowForm(false)
     setShowList(true)
   }
+  const loadingStr = () => {
+    navigate(-1);
+    setTimeout(() => {
+      window.location.reload();
+    }, 20000);
+    
+  
+  }
 
   return (
     <>
       <div className={style.block}>
         <div className={style.operation}>
-          <Link to="/" className={style.opers} >Сайт</Link>
+          <div className={style.opers} onClick={loadingStr}>Сайт</div>
           <button className={style.opers} id={showlist ? style.list : style.list_off} onClick={handleList}>Список пользователей</button>
           <button className={style.opers} id={showform ? style.form : style.form_off} onClick={handleForm}>Формы заявок</button>
         </div>
@@ -60,11 +54,10 @@ function Client({ props }) {
                 </div>
                 <div>{props[0].user.map(item =>
                   <div id={item.id} className={style.listUsers}>
-                    
+                   
                     <span id={style.name} className={style.items}>{item.name}</span>
                     <span id={style.phone} className={style.items}>{item.phone}</span>
                     <span id={style.password} className={style.items}>{item.password}</span>
-
                     <select className={style.choice} onChange={(e) => handleUser(e)}>
                       <option id={style.role} className={style.items && style.choices}> {item.role} </option>
                       {item.role === "ADMIN" ? <option className={style.choices} name="admin">USER</option> : ''}
@@ -99,9 +92,7 @@ function Client({ props }) {
               </div>
               :
               <div className={style.check}>
-
-
-
+                
               </div>}
 
 
